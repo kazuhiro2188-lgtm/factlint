@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-08",
+  "assets": 152800,
+  "liabilities": 167400,
+  "positions": [
+    { "venue": "alpha", "principal": 90000, "collected": 198 },
+    { "venue": "beta", "principal": 20100, "collected": 2133 }
+  ]
+}
