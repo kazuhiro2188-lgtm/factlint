@@ -16,9 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # pnpm のバージョンは package.json の packageManager が唯一の情報源。
+      # ここで version を指定すると二重定義になり、action が失敗する。
       - uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - uses: actions/setup-node@v4
         with:
