@@ -1,4 +1,4 @@
-import type { ClaimResult, Report } from "@factlint/core";
+import type { ClaimResult, Report } from "factlint-core";
 
 /** 端末の色。CI やパイプ経由では自動的に無効化する。 */
 interface Palette {

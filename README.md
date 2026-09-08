@@ -126,7 +126,7 @@ npx factlint --source data.json --output report.md
 ### ライブラリ
 
 ```ts
-import { check } from "@factlint/core";
+import { check } from "factlint-core";
 
 const report = check({
   source: { assets: 152800, liabilities: 167400 },
@@ -137,7 +137,7 @@ report.stats.ungrounded; // 1
 report.results[1].nearest; // { expression: "...", value: 9.55, delta: 2.27 }
 ```
 
-`@factlint/core` は**実行時依存がゼロ**です。Node でもブラウザでも、バンドラを通さずそのまま `import` できます（[デモページ](apps/demo/index.html)は実際にそうしています）。
+`factlint-core` は**実行時依存がゼロ**です。Node でもブラウザでも、バンドラを通さずそのまま `import` できます（[デモページ](apps/demo/index.html)は実際にそうしています）。
 
 ### CI に組み込む
 

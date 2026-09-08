@@ -1,4 +1,4 @@
-import { check } from "@factlint/core";
+import { check } from "factlint-core";
 import { describe, expect, it } from "vitest";
 import { renderGithub, renderHuman, renderJson } from "../src/render.js";
 

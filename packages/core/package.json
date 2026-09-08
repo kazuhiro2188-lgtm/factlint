@@ -1,5 +1,5 @@
 {
-  "name": "@factlint/core",
+  "name": "factlint-core",
   "version": "0.1.0",
   "description": "Deterministic grounding checker for numbers in AI-generated text. Zero runtime dependencies.",
   "license": "MIT",
@@ -12,10 +12,29 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist", "README.md"],
-  "keywords": ["llm", "hallucination", "grounding", "eval", "ai", "verification", "lint"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "llm",
+    "hallucination",
+    "grounding",
+    "eval",
+    "ai",
+    "verification",
+    "lint"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kazuhiro2188-lgtm/factlint.git"
+  },
+  "homepage": "https://github.com/kazuhiro2188-lgtm/factlint#readme",
+  "bugs": {
+    "url": "https://github.com/kazuhiro2188-lgtm/factlint/issues"
   }
 }

@@ -5,7 +5,7 @@ export default defineConfig({
   resolve: {
     alias: {
       // テストは常にソースを見る。ビルド成果物との二重管理を避けるため。
-      "@factlint/core": fileURLToPath(new URL("./packages/core/src/index.ts", import.meta.url)),
+      "factlint-core": fileURLToPath(new URL("./packages/core/src/index.ts", import.meta.url)),
     },
   },
   test: {

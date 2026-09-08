@@ -20,7 +20,7 @@ importers:
 
   packages/cli:
     dependencies:
-      factlint-core:
+      '@factlint/core':
         specifier: workspace:*
         version: link:../core
 

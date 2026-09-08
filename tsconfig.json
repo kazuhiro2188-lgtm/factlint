@@ -7,7 +7,7 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@factlint/core": [
+      "factlint-core": [
         "packages/core/src/index.ts"
       ]
     }
