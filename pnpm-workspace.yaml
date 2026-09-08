@@ -2,14 +2,8 @@ packages:
   - "packages/*"
   - "apps/*"
 
+# vitest が依存する esbuild は、インストール時にネイティブバイナリを取得する
+# ビルドスクリプトを持つ。pnpm はこれを既定で実行せず、明示的な承認が無いと
+# インストール自体を失敗させる（ERR_PNPM_IGNORED_BUILDS）。
 allowBuilds:
-  esbuild: set this to true or false
-
-# vitest が依存する esbuild は、この構成ではネイティブビルドを必要としない（純JSの経路で動く）。
-# 意図して無視する。
-ignoredBuiltDependencies:
-  - esbuild
-
-# スクリプト実行のたびに依存関係の再検証を走らせない。
-# 上記の「無視」判断と噛み合わず、install が警告で失敗するため。
-verifyDepsBeforeRun: false
+  esbuild: true
