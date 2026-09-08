@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ["20", "22"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: 型チェック
+        run: pnpm typecheck
+
+      - name: テスト
+        run: pnpm test
+
+      - name: ビルド
+        run: pnpm build
+
+      # ここから先は「実際にコマンドとして動くか」の確認。
+      # ビルドが通ることと、CLI が期待どおり合否を返すことは別物なので、両方を見る。
+      - name: 動作確認 — 根拠のある文章は成功で終わる
+        run: node packages/cli/dist/bin.js -s examples/sample-source.json -o examples/sample-grounded.md --no-color
+
+      - name: 動作確認 — 根拠のない数値があれば失敗で終わる
+        run: |
+          if node packages/cli/dist/bin.js -s examples/sample-source.json -o examples/sample-report.md --no-color; then
+            echo "根拠なしを検出できていない。終了コードが 0 になった。"
+            exit 1
+          fi
+
+      - name: 動作確認 — GitHub 形式のアノテーションを出せる
+        run: node packages/cli/dist/bin.js -s examples/sample-source.json -o examples/sample-report.md -f github --allow-ungrounded 1
