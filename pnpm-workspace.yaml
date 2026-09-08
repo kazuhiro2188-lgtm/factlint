@@ -1,0 +1,15 @@
+packages:
+  - "packages/*"
+  - "apps/*"
+
+allowBuilds:
+  esbuild: set this to true or false
+
+# vitest が依存する esbuild は、この構成ではネイティブビルドを必要としない（純JSの経路で動く）。
+# 意図して無視する。
+ignoredBuiltDependencies:
+  - esbuild
+
+# スクリプト実行のたびに依存関係の再検証を走らせない。
+# 上記の「無視」判断と噛み合わず、install が警告で失敗するため。
+verifyDepsBeforeRun: false
