@@ -1,6 +1,6 @@
-import { check } from "factlint-core";
+import { check } from "../../src/index.js";
 import { describe, expect, it } from "vitest";
-import { renderGithub, renderHuman, renderJson } from "../src/render.js";
+import { renderGithub, renderHuman, renderJson } from "../../src/cli/render.js";
 
 const report = check({
   source: { assets: 152800, liabilities: 167400 },

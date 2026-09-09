@@ -1,20 +1,53 @@
 {
-  "name": "factlint-monorepo",
+  "name": "factlint",
   "version": "0.1.0",
-  "private": true,
-  "description": "Deterministic hallucination linter for numbers in AI-generated text",
+  "description": "Deterministic hallucination linter for numbers in AI-generated text. No LLM involved, zero runtime dependencies.",
+  "license": "MIT",
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "factlint": "./dist/cli/bin.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "llm",
+    "hallucination",
+    "grounding",
+    "eval",
+    "ai",
+    "verification",
+    "lint",
+    "ci"
+  ],
   "packageManager": "pnpm@11.1.2",
   "engines": {
     "node": ">=22"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kazuhiro2188-lgtm/factlint.git"
+  },
+  "homepage": "https://github.com/kazuhiro2188-lgtm/factlint#readme",
+  "bugs": {
+    "url": "https://github.com/kazuhiro2188-lgtm/factlint/issues"
+  },
   "scripts": {
-    "build": "tsc -b packages/cli",
+    "build": "tsc -p tsconfig.build.json && chmod +x dist/cli/bin.js",
+    "prepare": "pnpm build",
     "test": "vitest run",
-    "test:watch": "vitest",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "check": "pnpm typecheck && pnpm test",
-    "build:demo": "node scripts/build-demo.mjs"
+    "build:demo": "node scripts/build-demo.mjs",
+    "check": "pnpm typecheck && pnpm test"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

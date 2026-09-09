@@ -108,7 +108,8 @@ AIは数値を丸めて書きます。`91.2817...%` を `91.3%` と書くのは�
 ### CLI
 
 ```bash
-npm install -D factlint
+# npm には公開していないため、GitHub から直接入れます
+pnpm add -D github:kazuhiro2188-lgtm/factlint
 
 npx factlint --source data.json --output report.md
 ```
@@ -126,7 +127,7 @@ npx factlint --source data.json --output report.md
 ### ライブラリ
 
 ```ts
-import { check } from "factlint-core";
+import { check } from "factlint";
 
 const report = check({
   source: { assets: 152800, liabilities: 167400 },
@@ -137,7 +138,7 @@ report.stats.ungrounded; // 1
 report.results[1].nearest; // { expression: "...", value: 9.55, delta: 2.27 }
 ```
 
-`factlint-core` は**実行時依存がゼロ**です。Node でもブラウザでも、バンドラを通さずそのまま `import` できます（[デモページ](apps/demo/index.html)は実際にそうしています）。
+`factlint` は**実行時依存がゼロ**です。Node でもブラウザでも、バンドラを通さずそのまま `import` できます（[デモページ](apps/demo/index.html)は実際にそうしています）。
 
 ### CI に組み込む
 
@@ -183,11 +184,11 @@ pnpm build
 pnpm build:demo  # ブラウザデモ用にエンジンを配置
 ```
 
-| パッケージ | 内容 |
+| フォルダ | 内容 |
 |---|---|
-| `packages/core` | 判定エンジン。実行時依存ゼロ |
-| `packages/cli` | コマンドライン。引数解析は Node 標準の `parseArgs` |
-| `apps/demo` | ブラウザデモ。エンジンをそのまま読み込む |
+| `src/` | 判定エンジン。実行時依存ゼロ |
+| `src/cli/` | コマンドライン。引数解析は Node 標準の `parseArgs` |
+| `apps/demo/` | ブラウザデモ。エンジンをそのまま読み込む |
 
 ## ライセンス
 

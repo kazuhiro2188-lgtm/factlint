@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseCliArgs } from "../src/args.js";
+import { parseCliArgs } from "../../src/cli/args.js";
 
 describe("parseCliArgs — 正常系", () => {
   it("source と output を読み取る", () => {

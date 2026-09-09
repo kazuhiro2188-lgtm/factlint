@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import process from "node:process";
-import { check } from "factlint-core";
+import { check } from "../index.js";
 import { HELP_TEXT, parseCliArgs } from "./args.js";
 import { renderGithub, renderHuman, renderJson } from "./render.js";
 

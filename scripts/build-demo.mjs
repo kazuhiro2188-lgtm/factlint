@@ -6,7 +6,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const from = resolve(root, "packages/core/dist");
+const from = resolve(root, "dist");
 const to = resolve(root, "apps/demo/engine");
 
 await rm(to, { recursive: true, force: true });
