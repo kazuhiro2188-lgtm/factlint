@@ -185,3 +185,26 @@ describe("check — 無関係な2値の掛け合わせを根拠にしない（�
     expect(report.results[0]?.evidence?.expression).toContain("要素数");
   });
 });
+
+describe("check — 倍率をパーセントの根拠にしない（結合テストで見つかった回帰）", () => {
+  // 別リポジトリ（report-agent）で4つの部品を組み合わせたときに発覚した。
+  // 「送金額 ÷ 支出合計 = 3.18」という倍率が、根拠のない「3.2%」を通していた。
+  // 割り算の商は倍率であって百分率ではない。
+  const source = { 送金額: 933050, 支出合計: 293400 };
+
+  it("倍率は パーセントの主張の根拠にならない", () => {
+    const report = check({ source, output: "前年同月比では 3.2% の増加です。" });
+    expect(report.results[0]?.status).toBe("ungrounded");
+  });
+
+  it("×100 した比率は パーセントの根拠になる", () => {
+    // 293400 ÷ 933050 × 100 = 31.44...
+    const report = check({ source, output: "支出は送金額の 31.4% にあたります。" });
+    expect(report.results[0]?.status).toBe("derived");
+  });
+
+  it("単位のない主張には、倍率をこれまでどおり使える", () => {
+    const report = check({ source, output: "送金額は支出の 3.18 倍です。" });
+    expect(report.results[0]?.status).toBe("derived");
+  });
+});

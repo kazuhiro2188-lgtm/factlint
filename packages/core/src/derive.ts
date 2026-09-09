@@ -5,6 +5,13 @@ export interface Candidate {
   readonly value: number;
   /** 人が読んで検算できる形の説明。ここが読めないと利用者はツールを信用しない。 */
   readonly expression: string;
+  /**
+   * 割り算の商（倍率）であることの印。
+   *
+   * 「a ÷ b」は倍率であって百分率ではない。3.18倍を「3.2%」の根拠として
+   * 認めてしまうと、根拠のない割合が通り抜ける。パーセントの主張には使わない。
+   */
+  readonly kind?: "ratio";
 }
 
 /** "assets(152800)" のように、ラベルと値をセットで書く。検算できることを優先する。 */
@@ -62,14 +69,14 @@ function* pairOperations(a: SourceValue, b: SourceValue): Generator<Candidate> {
 
   const aOverB = divide(a.value, b.value);
   if (aOverB !== undefined) {
-    yield { value: aOverB, expression: `${la} ÷ ${lb}` };
+    yield { value: aOverB, expression: `${la} ÷ ${lb}`, kind: "ratio" };
     yield { value: aOverB * 100, expression: `${la} ÷ ${lb} × 100` };
     yield { value: ((a.value - b.value) / b.value) * 100, expression: `(${la} - ${lb}) ÷ ${lb} × 100` };
   }
 
   const bOverA = divide(b.value, a.value);
   if (bOverA !== undefined) {
-    yield { value: bOverA, expression: `${lb} ÷ ${la}` };
+    yield { value: bOverA, expression: `${lb} ÷ ${la}`, kind: "ratio" };
     yield { value: bOverA * 100, expression: `${lb} ÷ ${la} × 100` };
     yield { value: ((b.value - a.value) / a.value) * 100, expression: `(${lb} - ${la}) ÷ ${la} × 100` };
   }
@@ -179,6 +186,11 @@ export function findEvidence(claim: Claim, input: DeriveInput): EvidenceLookup {
 
   let bestDerived: Candidate | undefined;
   for (const candidate of derivedCandidates(input)) {
+    // 倍率をパーセントの根拠にしない。3.18倍は「3.2%」の説明にならない
+    if (claim.unit === "percent" && candidate.kind === "ratio") {
+      remember(candidate.value, candidate.expression);
+      continue;
+    }
     if (matchesClaim(claim, candidate.value)) {
       if (bestDerived === undefined || isBetter(candidate, bestDerived, claim.value)) bestDerived = candidate;
     }
